@@ -1,0 +1,107 @@
+Ubuntu 설치 이후 Ros2 환경설정 (Ubuntu 버젼 22.04)
+
+1. Terminator 설치
+sudo apt update    //apt(Advance Packging Tools)
+
+/*
+update - 설치 가능한 패키지 리스트를 최신화
+upgrade - 실제 업데이트
+*/
+
+sudo apt install terminator //터미네이터 설치
+
+2. Chrome 설치
+sudo apt update
+sudo apt upgrade
+
+wget --version //설치유무와 버젼 확인
+
+sudo apt install wget //wget 설치
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb //크롬 다운로드
+sudo dpkg -i google-chrome-stable_current_amd64.deb //크롬 설치
+
+sudo apt install chromium-browser
+
+3. python pip3 설치
+sudo apt update
+sudo apt upgrade
+
+pip3 -v //pip3 설치유무 확인
+//pip3 파이썬 모듈 관리자
+
+sudo apt install python3-pip //pip3 설치
+
+pip3 install --upgrade pip //***필수 !!
+
+python3 --version //파이썬 버젼 확인
+
+4.jupyter notebook 설치
+jupyter --version //설치유무 확인
+pip install jupyter //쥬피터 설치
+
+ls //현재 파일,폴더 목록을 보여줌
+mkdir python //python이라는 폴더를 만들어줌
+cd python/ //python 폴더로 이동
+jupyter notebook //쥬피터 노트북 실행
+
+5.VSCode 설치
+https://code.visualstudio.com/Download // .deb파일 64bit 링크 클릭 후 설치파일 다운로드
+
+sudo apt install ./Downloads/code_1.102.3-1753759567_amd64.deb //vscode 설치
+
+code //vscode 실행
+
+6.Sublime text 설치
+Sublime Text 홈페이지에서 Download에서 Linux repos선택
+
+Linux Package Manager Repositories 따라서 설치 (복붙하면됨)
+- Stable로 설치 !! (***Dev는 건너뛰기***)
+
+subl //실행하기
+
+******************** Ros2 개발 시작 **********************
+7. Humble 설치 (Ubuntu 버젼 22.04)
+https://docs.ros.org/en/humble/Installation.html (***꼭 공식페이지에서 하는걸 추천)
+->Ubuntu(deb packages) 선택해서 이동 
+
+Set lacale //지역설정하기
+
+ls /usr/share/keyrings/ (키가 저장되는 장소 확인)
+
+ls /etc/apt/sources.list.d/ (설치된 프로그램 확인하기)
+
+sudo apt update
+sudo apt upgrade
+sudo apt install ros-humble-desktop
+
+8. bashrc 설정하기
+echo $SHELL // 현대 SHELL 확인
+(echo 명령어는 python의 print 와 같은 역할)
+
+subl ~/.bashrc //Sublime으로 .bashrc 열기
+(bashrc : 터미널 실행시 가장먼저 실행하는 설정을 보관하는 파일)
+
+9. alias 설정하기
+alias //터미널에서 치면 alias 명령어 목록이 나옴
+
+alias sb="source ~/.bashrc; echo \"bashrc is reloaded\""
+alias ros_domain="export ROS_DOMAIN_ID=13; echo \"ROS_DOMAIN_ID=13\""
+alias humble="source /opt/ros/humble/setup.bash; ros_domain; echo \"ROS2 humble is activated!\""
+alias turtle="ros2 run turtlesim turtlesim_node; echo \"Ros2 Turtlesim Run!\""
+
+--------- Project Build : Colcon 설치 ------------
+1. dev tools 설치
+https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
+
+Install development tools and ROS tools 항목 복붙해서 설치
+
+2. colcon 설치
+https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html
+
+sudo apt install python3-colcon-common-extensions // 콜콘 설치
+
+3. tree 설치 : 프로젝트 구조 쉽게 보기
+sudo apt install tree
+
+
