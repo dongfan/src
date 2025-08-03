@@ -46,13 +46,41 @@ class DistTurtleServer(Node):
 
     def excute_callback(self, goal_handle):
         feedback_msg = DistTurtle.Feedback()
-        for n in range(0, 10):
-            feedback_msg.remained_dist = float(n)
+
+        msg = Twist()
+        msg.linear.x = goal_handle.request.linear_x
+        msg.angular.z = goal_handle.request.angular_z
+
+        while True:
+            self.total_dist += self.calc_diff_pose()
+            feedback_msg.remained_dist = goal_handle.request.dist - self.total_dist
             goal_handle.publish_feedback(feedback_msg)
-            time.sleep(0.5)
+            self.publisher.publish(msg)
+            time.sleep(0.1)
+
+            if feedback_msg.remained_dist <= 0.2:
+                break
 
         goal_handle.succeed()
         result = DistTurtle.Result()
+
+        result.pose_x = self.current_pose.x
+        result.pose_y = self.current_pose.y
+        result.pose_theta = self.current_pose.theta
+        result.total_dist = self.total_dist
+
+        self.total_dist = 0.0
+        self.is_first_time = True
+
+        #dist turtle example
+        #feedback_msg = DistTurtle.Feedback()
+        #for n in range(0, 10):
+        #    feedback_msg.remained_dist = float(n)
+        #    goal_handle.publish_feedback(feedback_msg)
+        #    time.sleep(0.5)
+
+        #goal_handle.succeed()
+        #result = DistTurtle.Result()
 
         return result
 
